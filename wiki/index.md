@@ -1,4 +1,9 @@
 # Wiki Index
 
 Maintained automatically by /wiki-synthesis and /meeting-sync.
-Each subdirectory holds synthesized knowledge for one domain.
+
+## Architecture
+- [[architecture/swtch]] — Full architecture: services, Cloudflare bypass, AppState flow, deployment
+
+## Decisions
+- [[decisions/account-switching-chrome-profiles]] — Account switching opens Chrome profiles; no credential storage
