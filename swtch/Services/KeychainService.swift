@@ -52,7 +52,12 @@ final class KeychainService {
             let claudeAiOauth: OAuth
         }
         guard let data = json.data(using: .utf8) else { throw KeychainError.unexpectedData }
-        let root = try JSONDecoder().decode(Root.self, from: data)
+        let root: Root
+        do {
+            root = try JSONDecoder().decode(Root.self, from: data)
+        } catch {
+            throw KeychainError.unexpectedData
+        }
         return ClaudeCredentials(
             accessToken:      root.claudeAiOauth.accessToken,
             refreshToken:     root.claudeAiOauth.refreshToken,
