@@ -65,7 +65,8 @@ final class ChromeCookieService {
         }
         defer { sqlite3_finalize(stmt) }
 
-        sqlite3_bind_text(stmt, 1, (name as NSString).utf8String, -1, nil)
+        sqlite3_bind_text(stmt, 1, (name as NSString).utf8String, -1,
+                          unsafeBitCast(-1, to: sqlite3_destructor_type.self))
         guard sqlite3_step(stmt) == SQLITE_ROW else {
             throw CookieError.noCookieFound(name)
         }
@@ -126,6 +127,7 @@ final class ChromeCookieService {
         return plaintext
     }
 
+    #if DEBUG
     static func testEncrypt(_ plaintext: String, key: [UInt8], iv: Data) throws -> Data {
         let input = Array(plaintext.utf8)
         var output = [UInt8](repeating: 0, count: input.count + kCCBlockSizeAES128)
@@ -147,4 +149,5 @@ final class ChromeCookieService {
         guard status == kCCSuccess else { throw CookieError.decryptionFailed }
         return Data(output.prefix(outputLength))
     }
+    #endif
 }
