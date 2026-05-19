@@ -29,10 +29,12 @@ final class DefaultShellRunner: ShellRunner {
         process.waitUntilExit()
 
         let data = outPipe.fileHandleForReading.readDataToEndOfFile()
-        guard !data.isEmpty else { throw ShellError.noOutput }
         guard process.terminationStatus == 0 else {
             throw ShellError.nonZeroExit(process.terminationStatus)
         }
-        return String(data: data, encoding: .utf8) ?? ""
+        guard let output = String(data: data, encoding: .utf8) else {
+            throw ShellError.noOutput
+        }
+        return output
     }
 }

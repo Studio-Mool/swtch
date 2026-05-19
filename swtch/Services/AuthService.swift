@@ -26,7 +26,12 @@ final class AuthService {
         }
         let output = try shellRunner.run(Constants.CLI.claudePath, arguments: ["auth", "status"])
         guard let data = output.data(using: .utf8) else { throw AuthError.invalidOutput }
-        let response = try JSONDecoder().decode(AuthStatusResponse.self, from: data)
+        let response: AuthStatusResponse
+        do {
+            response = try JSONDecoder().decode(AuthStatusResponse.self, from: data)
+        } catch {
+            throw AuthError.invalidOutput
+        }
         guard response.loggedIn else { throw AuthError.notLoggedIn }
         return AccountInfo(
             email: response.email,
