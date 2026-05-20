@@ -1,10 +1,15 @@
 ---
 confidence: high
-sources: [2026-05-19-swtch-boston]
-last_updated: 2026-05-19
+sources: [2026-05-19-swtch-boston, 2026-05-20-swtch-boston]
+last_updated: 2026-05-20
+status: retired
 ---
 
-# swtch — Architecture
+# swtch — Architecture (Retired)
+
+> **Status:** Project retired 2026-05-20. The feature (Claude usage monitoring in the
+> macOS menu bar) is now native in conductor.build. Branch `building-swtch` is pushed
+> and archived. See [[decisions/swtch-retired]].
 
 [[decisions/account-switching-chrome-profiles]]
 
